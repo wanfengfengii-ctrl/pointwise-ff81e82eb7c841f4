@@ -1,0 +1,2422 @@
+{
+  "cases": [
+    {
+      "name": "incident_original_layout_split",
+      "expected": [
+        [
+          "fact",
+          "dim"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "fact",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0,
+                2
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "dim"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1,
+                3
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "fact"
+              ],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [],
+              [],
+              [
+                "fact"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "dim"
+              ],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "single_cause_encoding_only",
+      "expected": [
+        [
+          "enc_le",
+          "enc_text"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "enc_le",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0,
+                2
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "enc_text"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1,
+                3
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "enc_le"
+              ],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [],
+              [],
+              [
+                "enc_le"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "enc_text"
+              ],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "single_cause_scale_only_text",
+      "expected": [
+        [
+          "scale1",
+          "scale2"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "scale1",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "reuse",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [
+                "scale1"
+              ],
+              "right_ids": []
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "scale2"
+              ]
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 1
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "scale1"
+              ],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "scale2"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "single_cause_kind_only",
+      "expected": [
+        [
+          "kind_i64",
+          "kind_dec"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "kind_i64",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "reuse",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "kind_dec"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "kind_i64"
+              ],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "kind_i64"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "kind_dec"
+              ],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "necessary_combination_scale_and_encoding",
+      "expected": [
+        [
+          "both",
+          "both_r"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "both",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0,
+                2
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [
+                "both"
+              ],
+              "right_ids": []
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1,
+                3
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "both_r"
+              ]
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 1
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "both"
+              ],
+              [],
+              [],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "both_r"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "necessary_control_scale_only",
+      "expected": [
+        [
+          "ctl_scale_l",
+          "ctl_scale_r"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "ctl_scale_l",
+            "ctl_scale_r"
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0,
+                2
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [
+                "ctl_scale_l"
+              ],
+              "right_ids": [
+                "ctl_scale_r"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1,
+                3
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 1
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "ctl_scale_l"
+              ],
+              [],
+              [],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "ctl_scale_r"
+              ],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "necessary_control_encoding_only",
+      "expected": [
+        [
+          "ctl_enc_l",
+          "ctl_enc_r"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "ctl_enc_l",
+            "ctl_enc_r"
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0,
+                2
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [
+                "ctl_enc_l"
+              ],
+              "right_ids": [
+                "ctl_enc_r"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1,
+                3
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 1
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "ctl_enc_l"
+              ],
+              [],
+              [],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 1
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "ctl_enc_r"
+              ],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "combo_masked_bucket_collision",
+      "expected": [
+        [
+          "mask_l",
+          "mask_r"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "mask_l",
+            "mask_r"
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "reuse",
+            "groups": 4,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": []
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "mask_l"
+              ],
+              "right_ids": [
+                "mask_r"
+              ]
+            },
+            {
+              "group": 2,
+              "left_buckets": [
+                2
+              ],
+              "right_buckets": [
+                2
+              ],
+              "left_ids": [],
+              "right_ids": []
+            },
+            {
+              "group": 3,
+              "left_buckets": [
+                3
+              ],
+              "right_buckets": [
+                3
+              ],
+              "left_ids": [],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "mask_l"
+              ],
+              [],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json",
+                "right/part-2.json",
+                "right/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "mask_r"
+              ],
+              [],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "no_false_positive_truncation",
+      "expected": [
+        [
+          "int_one",
+          null
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "int_one",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "reuse",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": []
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "int_one"
+              ],
+              "right_ids": [
+                "frac_125"
+              ]
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "int_one"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "frac_125"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "directed_preserved_right_scale_down",
+      "expected": [
+        [
+          "dl",
+          "ir"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "dl",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0,
+                2
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "ir"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1,
+                3
+              ],
+              "left_ids": [
+                "dl"
+              ],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "dl"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json",
+                "right/part-2.json",
+                "right/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "ir"
+              ],
+              [],
+              [],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "unrepresentable_left_row_still_emitted",
+      "expected": [
+        [
+          "frac_left",
+          null
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "frac_left",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0,
+                2
+              ],
+              "left_ids": [
+                "frac_left"
+              ],
+              "right_ids": []
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1,
+                3
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "int_right"
+              ]
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "frac_left"
+              ],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json",
+                "right/part-2.json",
+                "right/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [],
+              [],
+              [
+                "int_right"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "cross_encoding_decimal_text_le",
+      "expected": [
+        [
+          "dec_text",
+          "dec_le"
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "dec_text",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0,
+                2
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [
+                "dec_text"
+              ],
+              "right_ids": []
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1,
+                3
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "dec_le"
+              ]
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [],
+              [
+                "dec_text"
+              ],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "dec_le"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "legit_control_coalesce_duplicates_null",
+      "expected": [
+        [
+          "a",
+          "x"
+        ],
+        [
+          "a",
+          "y"
+        ],
+        [
+          "b",
+          "x"
+        ],
+        [
+          "b",
+          "y"
+        ],
+        [
+          "c",
+          null
+        ],
+        [
+          "d",
+          null
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "a",
+            "x"
+          ],
+          [
+            "a",
+            "y"
+          ],
+          [
+            "b",
+            "x"
+          ],
+          [
+            "b",
+            "y"
+          ],
+          [
+            "c",
+            null
+          ],
+          [
+            "d",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0,
+                2
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [
+                "a",
+                "b"
+              ],
+              "right_ids": [
+                "x",
+                "y"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1,
+                3
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "c",
+                "d"
+              ],
+              "right_ids": [
+                "z"
+              ]
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 4,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "c"
+              ],
+              [
+                "a",
+                "b"
+              ],
+              [
+                "d"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 3,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "x",
+                "y"
+              ],
+              [
+                "z"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "legit_control_reverse_coalesce",
+      "expected": [
+        [
+          "m",
+          "n"
+        ],
+        [
+          "p",
+          null
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "m",
+            "n"
+          ],
+          [
+            "p",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0,
+                2
+              ],
+              "left_ids": [
+                "m",
+                "p"
+              ],
+              "right_ids": [
+                "n"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1,
+                3
+              ],
+              "left_ids": [],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 2,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "m",
+                "p"
+              ],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json",
+                "right/part-2.json",
+                "right/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "n"
+              ],
+              [],
+              [],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "legit_control_text_reuse_duplicates",
+      "expected": [
+        [
+          "t1",
+          "u1"
+        ],
+        [
+          "t1",
+          "u2"
+        ],
+        [
+          "t2",
+          "u1"
+        ],
+        [
+          "t2",
+          "u2"
+        ],
+        [
+          "tn",
+          null
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "t1",
+            "u1"
+          ],
+          [
+            "t1",
+            "u2"
+          ],
+          [
+            "t2",
+            "u1"
+          ],
+          [
+            "t2",
+            "u2"
+          ],
+          [
+            "tn",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "reuse",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [
+                "t1",
+                "t2"
+              ],
+              "right_ids": [
+                "u1",
+                "u2"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "tn"
+              ],
+              "right_ids": [
+                "un"
+              ]
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 3,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "t1",
+                "t2"
+              ],
+              [
+                "tn"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 3,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "u1",
+                "u2"
+              ],
+              [
+                "un"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "empty_right_left_join",
+      "expected": [
+        [
+          "L1",
+          null
+        ],
+        [
+          "L2",
+          null
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "L1",
+            null
+          ],
+          [
+            "L2",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "reuse",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": []
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "L1",
+                "L2"
+              ],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 2,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "L1",
+                "L2"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 0,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "empty_left_left_join",
+      "expected": [],
+      "observed": {
+        "pairs": [],
+        "trace": {
+          "plan": {
+            "mode": "reuse",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "R1"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 0,
+              "schema": {
+                "kind": "decimal",
+                "scale": 2
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "R1"
+              ],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "both_empty_different_signature",
+      "expected": [],
+      "observed": {
+        "pairs": [],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0,
+                2
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": []
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1,
+                3
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 0,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [],
+              [],
+              []
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 0,
+              "schema": {
+                "kind": "decimal",
+                "scale": 1
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              []
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "nulls_never_match",
+      "expected": [
+        [
+          "left_null",
+          null
+        ]
+      ],
+      "observed": {
+        "pairs": [
+          [
+            "left_null",
+            null
+          ]
+        ],
+        "trace": {
+          "plan": {
+            "mode": "reuse",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": []
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "left_null"
+              ],
+              "right_ids": [
+                "right_null"
+              ]
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "left_null"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 1,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [
+                "right_null"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "encoding_duplicates_inner",
+      "expected": [
+        [
+          "a1",
+          "b1"
+        ],
+        [
+          "a1",
+          "b2"
+        ],
+        [
+          "a2",
+          "b1"
+        ],
+        [
+          "a2",
+          "b2"
+        ]
+      ],
+      "observed": {
+        "pairs": [],
+        "trace": {
+          "plan": {
+            "mode": "coalesce",
+            "groups": 2,
+            "reason": "equal key family/hash; divisible bucket counts"
+          },
+          "groups": [
+            {
+              "group": 0,
+              "left_buckets": [
+                0,
+                2
+              ],
+              "right_buckets": [
+                0
+              ],
+              "left_ids": [],
+              "right_ids": [
+                "b1",
+                "b2"
+              ]
+            },
+            {
+              "group": 1,
+              "left_buckets": [
+                1,
+                3
+              ],
+              "right_buckets": [
+                1
+              ],
+              "left_ids": [
+                "a1",
+                "a2"
+              ],
+              "right_ids": []
+            }
+          ]
+        },
+        "tables": {
+          "left": {
+            "manifest": {
+              "files": [
+                "left/part-0.json",
+                "left/part-1.json",
+                "left/part-2.json",
+                "left/part-3.json"
+              ],
+              "layout": {
+                "buckets": 4,
+                "encoding": "le-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 2,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [],
+              [],
+              [],
+              [
+                "a1",
+                "a2"
+              ]
+            ]
+          },
+          "right": {
+            "manifest": {
+              "files": [
+                "right/part-0.json",
+                "right/part-1.json"
+              ],
+              "layout": {
+                "buckets": 2,
+                "encoding": "text-v1",
+                "family": "numeric",
+                "hash": "sha256-v1"
+              },
+              "row_count": 2,
+              "schema": {
+                "kind": "i64",
+                "scale": 0
+              },
+              "version": 1
+            },
+            "placements": [
+              [
+                "b1",
+                "b2"
+              ],
+              []
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "locations": [
+    {
+      "path": "layout.py",
+      "line": 43,
+      "text": "    return None if value is None else Fraction(value, 10 ** schema['scale'])"
+    },
+    {
+      "path": "layout.py",
+      "line": 52,
+      "text": "    prefix = (schema['kind'] + ':' + str(schema['scale']) + ':').encode('ascii')"
+    },
+    {
+      "path": "layout.py",
+      "line": 53,
+      "text": "    if encoding == 'le-v1':"
+    },
+    {
+      "path": "layout.py",
+      "line": 54,
+      "text": "        return prefix + value.to_bytes(8, 'little', signed=True)"
+    },
+    {
+      "path": "layout.py",
+      "line": 55,
+      "text": "    return prefix + str(value).encode('ascii')"
+    },
+    {
+      "path": "layout.py",
+      "line": 61,
+      "text": "    digest = hashlib.sha256(key_bytes(schema, key, encoding)).digest()"
+    },
+    {
+      "path": "layout.py",
+      "line": 62,
+      "text": "    return int.from_bytes(digest, 'big') % count"
+    },
+    {
+      "path": "table.py",
+      "line": 28,
+      "text": "        parts[bucket(schema, row['key'], encoding, count)].append(dict(row))"
+    },
+    {
+      "path": "table.py",
+      "line": 34,
+      "text": "        'layout': {'family': 'numeric', 'hash': 'sha256-v1',"
+    },
+    {
+      "path": "table.py",
+      "line": 35,
+      "text": "                   'encoding': encoding, 'buckets': count},"
+    },
+    {
+      "path": "planner.py",
+      "line": 4,
+      "text": "    compatible = (a['family'] == b['family'] and"
+    },
+    {
+      "path": "planner.py",
+      "line": 5,
+      "text": "                  a['hash'] == b['hash'] and large % small == 0)"
+    },
+    {
+      "path": "planner.py",
+      "line": 8,
+      "text": "            'mode': 'reuse' if small == large else 'coalesce',"
+    },
+    {
+      "path": "join.py",
+      "line": 14,
+      "text": "        li = list(range(group, len(left.manifest['files']), groups))"
+    },
+    {
+      "path": "join.py",
+      "line": 16,
+      "text": "        lrows = [r for i in li for r in left.read_bucket(i)]"
+    },
+    {
+      "path": "join.py",
+      "line": 17,
+      "text": "        rrows = [r for i in ri for r in right.read_bucket(i)]"
+    },
+    {
+      "path": "join.py",
+      "line": 28,
+      "text": "                if lv is not None and rv is not None and lv == rv:"
+    },
+    {
+      "path": "join.py",
+      "line": 31,
+      "text": "            if how == 'left' and not matched:"
+    },
+    {
+      "path": "join.py",
+      "line": 32,
+      "text": "                pairs.append([lrow['id'], None])"
+    },
+    {
+      "path": "lab.py",
+      "line": 26,
+      "text": "            'placements': [[r['id'] for r in table.read_bucket(i)]"
+    }
+  ]
+}

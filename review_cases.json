@@ -1,0 +1,407 @@
+[
+  {
+    "name": "incident_original_layout_split",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "fact", "key": 1, "payload": "measurement"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "dim", "key": "1.00", "payload": "calibration"}
+      ]
+    }
+  },
+  {
+    "name": "single_cause_encoding_only",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "enc_le", "key": 2, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "enc_text", "key": 2, "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "single_cause_scale_only_text",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "decimal", "scale": 1},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "scale1", "key": "0.0", "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "scale2", "key": "0.00", "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "single_cause_kind_only",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "kind_i64", "key": 2, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "kind_dec", "key": "2", "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "necessary_combination_scale_and_encoding",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "decimal", "scale": 1},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "both", "key": "-1.4", "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "both_r", "key": "-1.40", "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "necessary_control_scale_only",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "decimal", "scale": 1},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "ctl_scale_l", "key": "-1.4", "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "ctl_scale_r", "key": "-1.40", "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "necessary_control_encoding_only",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "decimal", "scale": 1},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "ctl_enc_l", "key": "-1.4", "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 1},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "ctl_enc_r", "key": "-1.4", "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "combo_masked_bucket_collision",
+    "how": "inner",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "text-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "mask_l", "key": 1, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "text-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "mask_r", "key": "1.00", "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "no_false_positive_truncation",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "int_one", "key": 1, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "frac_125", "key": "1.25", "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "directed_preserved_right_scale_down",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "dl", "key": "3.00", "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "ir", "key": 3, "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "unrepresentable_left_row_still_emitted",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "frac_left", "key": "1.25", "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "int_right", "key": 1, "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "cross_encoding_decimal_text_le",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "text-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "dec_text", "key": "1.25", "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "dec_le", "key": "1.25", "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "legit_control_coalesce_duplicates_null",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "a", "key": 5, "payload": "left"},
+        {"id": "b", "key": 5, "payload": "left"},
+        {"id": "c", "key": null, "payload": "left"},
+        {"id": "d", "key": 2, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "x", "key": 5, "payload": "right"},
+        {"id": "y", "key": 5, "payload": "right"},
+        {"id": "z", "key": null, "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "legit_control_reverse_coalesce",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "m", "key": 3, "payload": "left"},
+        {"id": "p", "key": 4, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "n", "key": 3, "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "legit_control_text_reuse_duplicates",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "t1", "key": "1.25", "payload": "left"},
+        {"id": "t2", "key": "1.25", "payload": "left"},
+        {"id": "tn", "key": null, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "u1", "key": "1.25", "payload": "right"},
+        {"id": "u2", "key": "1.25", "payload": "right"},
+        {"id": "un", "key": null, "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "empty_right_left_join",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "L1", "key": 1, "payload": "left"},
+        {"id": "L2", "key": null, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": []
+    }
+  },
+  {
+    "name": "empty_left_left_join",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "decimal", "scale": 2},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": []
+    },
+    "right": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "R1", "key": 5, "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "both_empty_different_signature",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": []
+    },
+    "right": {
+      "schema": {"kind": "decimal", "scale": 1},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": []
+    }
+  },
+  {
+    "name": "nulls_never_match",
+    "how": "left",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "left_null", "key": null, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "right_null", "key": null, "payload": "right"}
+      ]
+    }
+  },
+  {
+    "name": "encoding_duplicates_inner",
+    "how": "inner",
+    "left": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {"id": "a1", "key": 2, "payload": "left"},
+        {"id": "a2", "key": 2, "payload": "left"}
+      ]
+    },
+    "right": {
+      "schema": {"kind": "i64", "scale": 0},
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {"id": "b1", "key": 2, "payload": "right"},
+        {"id": "b2", "key": 2, "payload": "right"}
+      ]
+    }
+  }
+]
