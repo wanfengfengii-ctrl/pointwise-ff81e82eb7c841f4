@@ -1,0 +1,136 @@
+{
+  "normal": {
+    "how": "left",
+    "left": {
+      "schema": {
+        "kind": "i64",
+        "scale": 0
+      },
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {
+          "id": "f1",
+          "key": 1,
+          "payload": "A"
+        },
+        {
+          "id": "f2",
+          "key": 1,
+          "payload": "B"
+        },
+        {
+          "id": "fn",
+          "key": null,
+          "payload": "missing"
+        },
+        {
+          "id": "f3",
+          "key": -2,
+          "payload": "C"
+        }
+      ]
+    },
+    "right": {
+      "schema": {
+        "kind": "i64",
+        "scale": 0
+      },
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {
+          "id": "d1",
+          "key": 1,
+          "payload": "X"
+        },
+        {
+          "id": "d2",
+          "key": 1,
+          "payload": "Y"
+        },
+        {
+          "id": "dn",
+          "key": null,
+          "payload": "unused"
+        }
+      ]
+    }
+  },
+  "coalesce": {
+    "how": "inner",
+    "left": {
+      "schema": {
+        "kind": "decimal",
+        "scale": 2
+      },
+      "encoding": "text-v1",
+      "buckets": 4,
+      "rows": [
+        {
+          "id": "a",
+          "key": "1.25",
+          "payload": "A"
+        },
+        {
+          "id": "b",
+          "key": "-2.00",
+          "payload": "B"
+        }
+      ]
+    },
+    "right": {
+      "schema": {
+        "kind": "decimal",
+        "scale": 2
+      },
+      "encoding": "text-v1",
+      "buckets": 2,
+      "rows": [
+        {
+          "id": "x",
+          "key": "1.25",
+          "payload": "X"
+        },
+        {
+          "id": "y",
+          "key": "-2.00",
+          "payload": "Y"
+        }
+      ]
+    }
+  },
+  "incident": {
+    "how": "left",
+    "left": {
+      "schema": {
+        "kind": "i64",
+        "scale": 0
+      },
+      "encoding": "le-v1",
+      "buckets": 4,
+      "rows": [
+        {
+          "id": "fact",
+          "key": 1,
+          "payload": "measurement"
+        }
+      ]
+    },
+    "right": {
+      "schema": {
+        "kind": "decimal",
+        "scale": 2
+      },
+      "encoding": "le-v1",
+      "buckets": 2,
+      "rows": [
+        {
+          "id": "dim",
+          "key": "1.00",
+          "payload": "calibration"
+        }
+      ]
+    }
+  }
+}
